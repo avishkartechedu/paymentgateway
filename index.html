@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Internship Payment Form</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeInScale {
+      0% { opacity: 0; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .animate-fade-in-scale {
+      animation: fadeInScale 0.5s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-r from-blue-50 to-white min-h-screen flex items-center justify-center p-6">
+  <div class="w-full max-w-2xl bg-white shadow-2xl rounded-3xl p-10 space-y-8">
+    
+    <!-- Company Logo -->
+    <div class="flex justify-center mb-4">
+      <img src="https://raw.githubusercontent.com/avishkartechedu/paymentgateway/refs/heads/main/Screenshot%202025-05-26%20184844.png" alt="Company Logo" class="h-28 object-contain" />
+    </div>
+
+    <!-- Title -->
+    <h1 class="text-3xl font-bold text-center text-gray-800">Internship Payment Gateway</h1>
+
+    <!-- Welcome Message -->
+    <div class="bg-blue-50 p-5 rounded-xl border border-blue-100 text-gray-700 text-sm leading-relaxed space-y-4 shadow-inner">
+      <p><strong>Welcome Student</strong>, the official hub for <strong>Avishkar Tech Solutions'</strong> internship opportunities and e-learning platform...</p>
+      <p><strong>LMS (Learning Management System):</strong><br>
+        <a href="https://avishkar.academy" class="text-blue-600 hover:underline" target="_blank">https://avishkar.academy</a>
+      </p>
+      <p><strong>Visit our site 👇</strong><br>
+        <a href="https://avishkartechsolutions.com/" class="text-blue-600 hover:underline" target="_blank">https://avishkartechsolutions.com/</a>
+      </p>
+      <p><strong>LinkedIn Profile 👇</strong><br>
+        <a href="https://www.linkedin.com/in/sunil-gangadhar-78936018a" class="text-blue-600 hover:underline" target="_blank">
+          https://www.linkedin.com/in/sunil-gangadhar-78936018a
+        </a>
+      </p>
+    </div>
+
+    <form name="google-sheet" class="space-y-6">
+      <!-- Name -->
+      <div>
+        <label for="Name" class="block text-lg font-semibold text-gray-700">Name</label>
+        <input type="text" name="Name" required class="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Enter your name" />
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label for="Email" class="block text-lg font-semibold text-gray-700">Email</label>
+        <input type="email" name="Email" required class="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Enter your email" />
+      </div>
+
+      <!-- Mobile Number -->
+      <div>
+        <label for="Mobile" class="block text-lg font-semibold text-gray-700">Mobile Number</label>
+        <input type="text" name="Mobile" required class="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Enter your mobile number" />
+      </div>
+
+      <!-- College/University -->
+      <div>
+        <label for="College" class="block text-lg font-semibold text-gray-700">College/University</label>
+        <input type="text" name="College" required class="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Enter your college/university name" />
+      </div>
+
+      <!-- Domain of Interest -->
+      <div>
+        <label for="Domain" class="block text-lg font-semibold text-gray-700">Domain of Interest</label>
+        <input type="text" name="Domain" required class="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="E.g. Web Development, Data Science" />
+      </div>
+
+      <!-- UPI Payment QR Code -->
+      <div class="text-center">
+        <label class="block text-lg font-semibold text-gray-700 mb-2">Scan to Pay via UPI</label>
+        <img src="https://raw.githubusercontent.com/avishkartechedu/paymentgateway/refs/heads/main/Screenshot%202025-05-27%20175425.png" alt="UPI Scanner" class="mx-auto w-48 h-48 border border-gray-300 rounded-xl shadow-md">
+      </div>
+
+      <!-- Reference Number -->
+      <div>
+        <label for="RefNo" class="block text-lg font-semibold text-gray-700">Reference / Transaction ID</label>
+        <input type="text" name="RefNo" required class="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Enter UPI Reference or Transaction ID" />
+      </div>
+
+      <!-- Agreement Checkbox -->
+      <div class="flex items-start">
+        <input type="checkbox" name="agree" required class="mt-1.5 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+        <label class="ml-2 text-sm font-medium text-gray-700">I agree to the terms and conditions</label>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-center">
+        <button type="submit" class="bg-blue-600 text-white py-3 px-8 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">Submit</button>
+      </div>
+
+      <input type="hidden" id="submissionDate" name="SubmissionDate">
+    </form>
+
+    <!-- Status Message Container -->
+    <div id="statusMessage" class="text-center text-lg font-medium text-gray-800 hidden animate-fade-in-scale"></div>
+  </div>
+
+  <script>
+    document.getElementById('submissionDate').value = new Date().toISOString().split('T')[0];
+
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxkknpOYp_nD5pLMt4bef2i6TXxObxlkvvVgCPPfiFpd5SqW_JLnAK3HpyukL_MDQvrMA/exec';
+    const form = document.forms['google-sheet'];
+    const statusMessage = document.getElementById('statusMessage');
+
+    const whatsappNumber = '918639863632'; // 👈 Corrected number with country code (India = +91)
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      statusMessage.textContent = "We are submitting your details to our HR team...";
+      statusMessage.classList.remove('hidden');
+
+      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+        .then(response => {
+          setTimeout(() => {
+            statusMessage.textContent = "Your response has been submitted successfully. Our team will get back to you after verifying the payment. Redirecting to WhatsApp...";
+          }, 3000);
+
+          setTimeout(() => {
+            const message = encodeURIComponent("I have completed my payment and I need access. Here is the screenshot.");
+            window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
+          }, 10000);
+        })
+        .catch(error => {
+          statusMessage.textContent = "Something went wrong. Please try again later.";
+          console.error('Error!', error.message);
+        });
+    });
+  </script>
+</body>
+</html>
